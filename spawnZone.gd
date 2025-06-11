@@ -13,6 +13,7 @@ func _on_mouse_exited() -> void:
 	is_mouse_in = false
 
 
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseMotion:
-		print("yes")
+		mouse_pos = to_local(get_global_mouse_position())
+		

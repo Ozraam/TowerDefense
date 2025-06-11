@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://chjopokxypdae"]
+[gd_scene load_steps=8 format=3 uid="uid://chjopokxypdae"]
 
 [ext_resource type="Script" uid="uid://c3omf7f82p3al" path="res://monster_manager.gd" id="1_f3sb7"]
+[ext_resource type="Script" uid="uid://cw5y775bs5tri" path="res://spawnZone.gd" id="2_fj7yv"]
+[ext_resource type="Script" uid="uid://ssbfg15k2ywx" path="res://tower_manager.gd" id="2_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://coroeip8a15a4" path="res://simple_gun.tscn" id="4_aqk2v"]
 
 [sub_resource type="Curve2D" id="Curve2D_fj7yv"]
 _data = {
@@ -9,6 +12,8 @@ _data = {
 point_count = 8
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_tlwt5"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fj7yv"]
 
 [node name="World" type="Node2D"]
 
@@ -29,20 +34,28 @@ rotation = 0.0404637
 
 [node name="Monsters" type="Node2D" parent="MonsterManager"]
 
-[node name="Tower" type="Node2D" parent="."]
+[node name="TowerManager" type="Node2D" parent="."]
+script = ExtResource("2_tlwt5")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="Tower"]
+[node name="MeshInstance2D" type="MeshInstance2D" parent="TowerManager"]
 position = Vector2(3.25, 2.25)
 scale = Vector2(7.5, 5.5)
 mesh = SubResource("ArrayMesh_tlwt5")
+texture = SubResource("PlaceholderTexture2D_fj7yv")
 
-[node name="Area2D" type="Area2D" parent="Tower"]
+[node name="SpawnZone" type="Area2D" parent="TowerManager"]
+script = ExtResource("2_fj7yv")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Tower/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TowerManager/SpawnZone"]
 polygon = PackedVector2Array(-577, 145, -417, 177, -282, 194, -151, 193, -107, 163, -75, 125, -100, 86, -197, 9, -293, -60, -307, -136, -241, -191, -61, -224, 135, -222, 284, -198, 342, -66, 359, 61, 322, 159, 335, 220, 399, 251, 540, 240, 585, 230, 581, -339, -588, -331, -585, 137)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Tower/Area2D"]
-polygon = PackedVector2Array(-587, 190, -429, 230, -196, 251, -89, 232, -11, 168, 7, 81, -73, -6, -227, -94, -224, -117, -110, -150, 105, -159, 225, -134, 267, -21, 274, 62, 225, 183, 267, 266, 361, 326, 555, 305, 641, 272, 633, 368, -624, 348, -626, 186)
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TowerManager/SpawnZone"]
+polygon = PackedVector2Array(-587, 190, -429, 230, -196, 251, -89, 232, -11, 168, 7, 81, -73, -6, -227, -94, -224, -117, -110, -150, 105, -159, 225, -134, 267, -21, 274, 62, 225, 183, 267, 266, 361, 326, 555, 305, 597, 270, 582, 342, -586, 337, -602, 188)
+
+[node name="Towers" type="Node2D" parent="TowerManager"]
+
+[node name="SimpleGun" parent="TowerManager/Towers" instance=ExtResource("4_aqk2v")]
+position = Vector2(-424, 241)
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -58,5 +71,17 @@ offset_right = 542.0
 offset_bottom = -264.0
 text = "Start Wave"
 
+[node name="SelectTower" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 342.0
+offset_top = -295.0
+offset_right = 443.0
+offset_bottom = -264.0
+text = "Place Tower"
+
 [connection signal="timeout" from="MonsterManager/Timer" to="MonsterManager" method="_on_timer_timeout"]
+[connection signal="input_event" from="TowerManager/SpawnZone" to="TowerManager/SpawnZone" method="_on_input_event"]
+[connection signal="mouse_entered" from="TowerManager/SpawnZone" to="TowerManager/SpawnZone" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="TowerManager/SpawnZone" to="TowerManager/SpawnZone" method="_on_mouse_exited"]
 [connection signal="button_up" from="UI/StartWave" to="MonsterManager" method="start_wave"]
+[connection signal="button_up" from="UI/SelectTower" to="TowerManager" method="_on_select_tower_button_up"]

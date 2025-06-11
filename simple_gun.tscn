@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://coroeip8a15a4"]
+
+[ext_resource type="Script" uid="uid://cfef8116mm8l2" path="res://simple_gun.gd" id="1_4bxtt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fj7yv"]
+radius = 149.335
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fj7yv"]
+radius = 5.045
+height = 23.728
+
+[node name="SimpleGun" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+input_pickable = false
+script = ExtResource("1_4bxtt")
+shoot_damage = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_fj7yv")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("CapsuleMesh_fj7yv")
+
+[node name="ShootTimeout" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="ShootTimeout" to="." method="_on_shoot_timeout_timeout"]
