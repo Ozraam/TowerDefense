@@ -5,6 +5,8 @@ class_name Monster
 var pathfollow : PathFollow2D
 var progress = 0
 
+signal monster_died(monster: Monster)
+
 @export var health: int = 100
 @export var damage: int = 10
 
@@ -26,6 +28,10 @@ func shoot(damage_amount: int) -> void:
 	$AnimationPlayer.play("ouch")
 	if health <= 0:
 		$AnimationPlayer.play("die")
+
+func _on_die() -> void:
+	monster_died.emit(self)
+	queue_free()
 
 func is_alive() -> bool:
 	return health > 0

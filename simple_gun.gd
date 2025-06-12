@@ -44,7 +44,7 @@ func _on_shoot_timeout_timeout() -> void:
         else:
             print("Monster does not have a shoot method.")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
     var target_monster = get_target_monster()
     if target_monster != null:
         look_at(target_monster.position)  # Rotate towards the target monster

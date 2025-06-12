@@ -21,7 +21,7 @@ point_count = 8
 
 [node name="MonsterManager" type="Node2D" parent="."]
 script = ExtResource("1_f3sb7")
-start = NodePath("../UI/StartWave")
+setupUiPath = NodePath("../UI")
 
 [node name="Timer" type="Timer" parent="MonsterManager"]
 
