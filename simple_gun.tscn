@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cfef8116mm8l2" path="res://simple_gun.gd" id="1_4bxtt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fj7yv"]
-radius = 149.335
+radius = 150.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_fj7yv"]
 radius = 5.045
@@ -24,5 +24,7 @@ mesh = SubResource("CapsuleMesh_fj7yv")
 
 [node name="ShootTimeout" type="Timer" parent="."]
 autostart = true
+
+[node name="Shootrange" type="MeshInstance2D" parent="."]
 
 [connection signal="timeout" from="ShootTimeout" to="." method="_on_shoot_timeout_timeout"]
