@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://chjopokxypdae"]
+[gd_scene load_steps=11 format=3 uid="uid://chjopokxypdae"]
 
 [ext_resource type="Script" uid="uid://c3omf7f82p3al" path="res://monster_manager.gd" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://cw5y775bs5tri" path="res://spawnZone.gd" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://ssbfg15k2ywx" path="res://tower_manager.gd" id="2_tlwt5"]
+[ext_resource type="Script" uid="uid://ki1sby0braww" path="res://ui.gd" id="4_dwbse"]
+[ext_resource type="Script" uid="uid://1tjyiagvqk06" path="res://progress_bar.gd" id="5_036b0"]
 [ext_resource type="Script" uid="uid://cx21l6ae1v2ly" path="res://shop.gd" id="5_dwbse"]
 
 [sub_resource type="Curve2D" id="Curve2D_fj7yv"]
@@ -15,6 +17,9 @@ point_count = 8
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fj7yv"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_dwbse"]
+font_size = 136
+
 [node name="World" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -23,6 +28,7 @@ point_count = 8
 script = ExtResource("1_f3sb7")
 setupUiPath = NodePath("../UI")
 coinsPocketPath = NodePath("../UI/shop/GoldLabel")
+wave = [5, 10, 15, 20, 25, 150]
 
 [node name="Timer" type="Timer" parent="MonsterManager"]
 
@@ -62,6 +68,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("4_dwbse")
 
 [node name="StartWave" type="Button" parent="UI"]
 layout_mode = 0
@@ -76,6 +83,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("5_dwbse")
+towerManagerPath = NodePath("../../TowerManager")
 
 [node name="GoldLabel" type="Label" parent="UI/shop"]
 layout_mode = 0
@@ -99,6 +107,26 @@ offset_top = -261.0
 offset_right = 542.0
 offset_bottom = -230.0
 text = "Toogle Shooting range"
+
+[node name="ProgressBar" type="ProgressBar" parent="UI"]
+layout_mode = 0
+offset_left = -245.0
+offset_top = -325.0
+offset_right = 245.0
+offset_bottom = -298.0
+script = ExtResource("5_036b0")
+
+[node name="GameOver" type="Label" parent="UI"]
+visible = false
+layout_mode = 0
+offset_left = -390.0
+offset_top = -188.0
+offset_right = 390.0
+offset_bottom = 187.0
+text = "GAME OVER
+Le nul"
+label_settings = SubResource("LabelSettings_dwbse")
+horizontal_alignment = 1
 
 [connection signal="timeout" from="MonsterManager/Timer" to="MonsterManager" method="_on_timer_timeout"]
 [connection signal="input_event" from="TowerManager/SpawnZone" to="TowerManager/SpawnZone" method="_on_input_event"]

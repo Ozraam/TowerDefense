@@ -1,14 +1,20 @@
 extends Node2D
 
+class_name TowerManager
+
 var player_want_tower = false
 @onready var spawnZone = $SpawnZone
-var tower : PackedScene = preload("res://simple_gun.tscn")
 var currentTower : SimpleGun
 var showRange = false
+var currentTowerCost = 0
 
-func _on_select_tower_button_up() -> void:
+func place_tower(tower_scene : PackedScene, tower_cost : int) -> void:
+	if player_want_tower:
+		print("Already placing a tower, please cancel first.")
+		return
 	player_want_tower = true
-	currentTower = tower.instantiate()
+	currentTowerCost = tower_cost
+	currentTower = tower_scene.instantiate()
 	currentTower.position = spawnZone.mouse_pos
 	$Towers.add_child(currentTower)
 	currentTower.toogle_shoot_range()
@@ -20,6 +26,7 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and player_want_tower:
 		if spawnZone.is_mouse_in and event.button_index == MOUSE_BUTTON_LEFT:
+			Inventory.remove_gold(currentTowerCost)
 			player_want_tower = false
 			if not showRange:
 				currentTower.toogle_shoot_range()

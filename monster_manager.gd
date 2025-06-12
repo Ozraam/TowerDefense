@@ -10,7 +10,7 @@ var coinScene = preload("res://coin.tscn")
 
 var alive_monsters = 0
 
-var wave = [
+@export var wave : PackedInt32Array = [
 	5,
 	10,
 	10
@@ -50,7 +50,7 @@ func _on_monster_died(monster: Monster) -> void:
 
 	var coin = coinScene.instantiate()
 	coin.position = monster.position
-	coin.value = 25 + (current_wave - 1) * 5
+	coin.value = (25 + (current_wave - 1) * 5) * monster.is_not_dead_by_end
 	coin.pocket = coinsPocket
 	$Golds.add_child(coin)
 
