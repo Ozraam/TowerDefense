@@ -34,6 +34,8 @@ rotation = 0.0404637
 
 [node name="Monsters" type="Node2D" parent="MonsterManager"]
 
+[node name="Gold" type="Node2D" parent="MonsterManager"]
+
 [node name="TowerManager" type="Node2D" parent="."]
 script = ExtResource("2_tlwt5")
 
@@ -56,6 +58,21 @@ polygon = PackedVector2Array(-587, 190, -429, 230, -196, 251, -89, 232, -11, 168
 
 [node name="SimpleGun" parent="TowerManager/Towers" instance=ExtResource("4_aqk2v")]
 position = Vector2(-424, 241)
+
+[node name="SimpleGun2" parent="TowerManager/Towers" instance=ExtResource("4_aqk2v")]
+position = Vector2(-419, 155)
+
+[node name="SimpleGun3" parent="TowerManager/Towers" instance=ExtResource("4_aqk2v")]
+position = Vector2(-437, 154)
+
+[node name="SimpleGun4" parent="TowerManager/Towers" instance=ExtResource("4_aqk2v")]
+position = Vector2(-444, 237)
+
+[node name="SimpleGun5" parent="TowerManager/Towers" instance=ExtResource("4_aqk2v")]
+position = Vector2(-457, 229)
+
+[node name="SimpleGun6" parent="TowerManager/Towers" instance=ExtResource("4_aqk2v")]
+position = Vector2(-455, 153)
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

@@ -9,6 +9,7 @@ var alive_monsters = 0
 var wave = [
 	5,
 	10,
+	10
 ]
 var current_wave = 0
 var current_wave_monster
